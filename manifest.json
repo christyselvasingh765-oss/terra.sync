@@ -1,0 +1,17 @@
+{
+  "id": "/",
+  "name": "SiteGuard AI - Worker Safety Alert System",
+  "short_name": "SiteGuard AI",
+  "description": "Construction site worker safety monitoring and emergency incident reporting prototype.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#06101f",
+  "theme_color": "#071426",
+  "categories": [
+    "safety",
+    "utilities",
+    "productivity"
+  ]
+}
