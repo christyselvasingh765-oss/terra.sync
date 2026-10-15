@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="SiteGuard AI construction worker safety monitoring dashboard">
+  <title>SiteGuard AI | Safety Command Center</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body>
+  <div class="bubbles" aria-hidden="true">
+    <span></span><span></span><span></span>
+    <span></span><span></span><span></span>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="#">
+      <span class="brand-icon">⬡</span>
+      <span>SITEGUARD <b>AI</b><small>WORKER SAFETY SYSTEM</small></span>
+    </a>
+
+    <div class="header-right">
+      <span class="network-badge">
+        <i id="dot"></i>
+        <span id="network">Checking connection...</span>
+      </span>
+      <span class="live-badge">● SYSTEM</span>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <section class="hero">
+      <div>
+        <p class="eyebrow">CONSTRUCTION INTELLIGENCE PLATFORM</p>
+        <h1>Safety Command<br><span>Center.</span></h1>
+        <p class="hero-description">
+          Monitor hazards. Protect workers. Respond faster.
+        </p>
+        <div class="hero-tags">
+          <span>◈ PPE MONITORING</span>
+          <span>◈ RISK INTELLIGENCE</span>
+          <span>◈ EMERGENCY RESPONSE</span>
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="shield">🛡️</div>
+        <div class="orbit-dot"></div>
+      </div>
+    </section>
+
+    <section class="section-heading">
+      <div>
+        <p class="eyebrow">SITE OVERVIEW</p>
+        <h2>Safety at a glance</h2>
+      </div>
+      <span class="demo-label">DEMO DATA</span>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Registered Workers</span><span class="stat-icon">♙</span>
+        </div>
+        <h3 id="workers">48</h3>
+        <p>Workers on demo site</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Open Incidents</span><span class="stat-icon warning">⚠</span>
+        </div>
+        <h3 id="openCount">0</h3>
+        <p>Require supervisor review</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Site Risk Score</span><span class="stat-icon">◉</span>
+        </div>
+        <h3><span id="risk">0</span><small>/100</small></h3>
+        <p id="riskLevel" class="risk-low">LOW RISK</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>Offline Reports</span><span class="stat-icon">⇅</span>
+        </div>
+        <h3 id="pending">0</h3>
+        <p>Waiting for connection</p>
+      </article>
+    </section>
+
+    <section class="section-heading">
+      <div>
+        <p class="eyebrow">SAFETY OPERATIONS</p>
+        <h2>Monitoring modules</h2>
+      </div>
+    </section>
+
+    <section class="modules-grid">
+
+      <!-- PPE CHECKER -->
+      <article class="panel">
+        <div class="panel-heading">
+          <div class="module-icon blue">◈</div>
+          <div>
+            <h2>PPE Safety Checker</h2>
+            <p>Helmet and safety vest verification</p>
+          </div>
+        </div>
+
+        <div class="feature-preview">
+          <div class="preview-symbol">🦺</div>
+          <div>
+            <strong>Personal Protective Equipment</strong>
+            <p>Upload a sample image or video for review.</p>
+          </div>
+        </div>
+
+        <label for="ppeFile">Choose sample image/video</label>
+        <input
+          type="file"
+          id="ppeFile"
+          accept="image/*,video/*"
+        >
+
+        <div id="ppePreview" class="media-preview" hidden>
+          <img id="ppeImage" alt="Selected PPE sample" hidden>
+          <video id="ppeVideo" controls playsinline hidden></video>
+        </div>
+
+        <button type="button" class="button secondary" id="ppeButton">
+          Analyse PPE Sample ↗
+        </button>
+
+        <p id="ppeResult" class="feedback">
+          AI detection requires a trained PPE model. Selecting a file alone does not detect violations.
+        </p>
+      </article>
+
+      <!-- DANGEROUS ZONES -->
+      <article class="panel">
+        <div class="panel-heading">
+          <div class="module-icon amber">⌖</div>
+          <div>
+            <h2>Dangerous Zone Alert</h2>
+            <p>Monitor restricted site areas</p>
+          </div>
+        </div>
+
+        <div class="zone-map">
+          <div class="zone-grid"></div>
+          <div class="map-zone crane-zone"><span>CRANE</span></div>
+          <div class="map-zone excavation-zone"><span>EXCAVATION</span></div>
+          <div class="map-zone safe-zone"><span>SAFE AREA</span></div>
+          <div class="worker-pin" id="workerPin">●</div>
+          <span class="map-caption">SIMULATED SITE MAP</span>
+        </div>
+
+        <label for="zone">Simulate worker location</label>
+        <select id="zone">
+          <option value="Safe Zone">Safe Zone</option>
+          <option value="Crane Zone">Crane Zone</option>
+          <option value="Excavation Zone">Excavation Zone</option>
+          <option value="Restricted Zone">Restricted Zone</option>
+        </select>
+
+        <button type="button" class="button secondary" id="zoneButton">
+          Check Zone Safety ↗
+        </button>
+
+        <p id="zoneResult" class="feedback">
+          Choose a zone to test the safety alert.
+        </p>
+      </article>
+
+      <!-- EMERGENCY SOS -->
+      <article class="panel sos-panel">
+        <div class="panel-heading">
+          <div class="module-icon red">SOS</div>
+          <div>
+            <h2>Worker Emergency</h2>
+            <p>Submit an urgent safety report</p>
+          </div>
+          <span class="priority-tag">HIGH PRIORITY</span>
+        </div>
+
+        <div class="emergency-banner">
+          <span class="pulse-dot"></span>
+          <div>
+            <strong>Emergency reporting</strong>
+            <p>Provide worker details and incident information.</p>
+          </div>
+        </div>
+
+        <form id="sosForm">
+          <label for="workerId">Worker ID</label>
+          <input
+            id="workerId"
+            name="worker_id"
+            type="text"
+            placeholder="Example: WRK-102"
+            required
+          >
+
+          <label for="location">Last reported location</label>
+          <input
+            id="location"
+            name="location"
+            type="text"
+            placeholder="Block A / Crane Zone"
+            required
+          >
+
+          <button type="button" class="button secondary" id="gpsButton">
+            ⌖ Use Current Location
+          </button>
+          <p class="small-note">
+            GPS requires permission and a supported secure connection.
+          </p>
+
+          <label for="incident">Incident type</label>
+          <select id="incident" name="incident" required>
+            <option value="Worker injured - assistance required">
+              Worker injured / assistance required
+            </option>
+            <option value="Fall hazard / near miss">Fall hazard / near miss</option>
+            <option value="PPE violation">PPE violation</option>
+            <option value="Dangerous zone entry">Dangerous zone entry</option>
+            <option value="Equipment emergency">Equipment emergency</option>
+            <option value="Other safety issue">Other safety issue</option>
+          </select>
+
+          <label for="photo">Capture photo or select evidence</label>
+          <input
+            id="photo"
+            name="photo"
+            type="file"
+            accept="image/*,video/*"
+            capture="environment"
+          >
+
+          <p class="small-note">
+            Camera access depends on browser permission. You can also select an existing file.
+          </p>
+
+          <div id="photoPreview" class="media-preview" hidden>
+            <img id="photoImage" alt="Emergency evidence preview" hidden>
+            <video id="photoVideo" controls playsinline hidden></video>
+          </div>
+
+          <button type="submit" class="button danger" id="sosSubmit">
+            🚨 SUBMIT EMERGENCY SOS
+          </button>
+
+          <p id="sosResult" class="feedback" role="status" aria-live="polite">
+            Online reports go to the configured backend. Offline reports are queued on this device.
+          </p>
+        </form>
+
+        <a class="call-button" href="tel:112">
+          ☎ Call Emergency Number 112
+        </a>
+
+        <p class="small-note">
+          Submitting this form does not automatically notify an ambulance. Call 112 directly in a real emergency.
+        </p>
+      </article>
+
+      <!-- ACTION PLAN -->
+      <article class="panel">
+        <div class="panel-heading">
+          <div class="module-icon green">✓</div>
+          <div>
+            <h2>Corrective Action Plan</h2>
+            <p>Recommended safety responses</p>
+          </div>
+        </div>
+
+        <div class="action-item">
+          <span class="action-number">01</span>
+          <div>
+            <strong>PPE violation</strong>
+            <p>Pause unsafe work and provide required protective equipment.</p>
+          </div>
+        </div>
+
+        <div class="action-item">
+          <span class="action-number">02</span>
+          <div>
+            <strong>Danger zone entry</strong>
+            <p>Warn the worker and notify the site supervisor.</p>
+          </div>
+        </div>
+
+        <div class="action-item">
+          <span class="action-number">03</span>
+          <div>
+            <strong>Worker emergency</strong>
+            <p>Contact trained site responders and emergency services.</p>
+          </div>
+        </div>
+
+        <div class="action-item">
+          <span class="action-number">04</span>
+          <div>
+            <strong>Equipment hazard</strong>
+            <p>Secure the area following approved site procedures.</p>
+          </div>
+        </div>
+
+        <div class="offline-info">
+          <span>⇅</span>
+          <div>
+            <strong>Offline-ready design</strong>
+            <p>Reports can be queued locally when the JavaScript offline storage and service worker are configured.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- INCIDENT HISTORY -->
+    <section class="panel history-panel">
+      <div class="panel-heading history-heading">
+        <div class="module-icon blue">▤</div>
+        <div>
+          <h2>Incident History</h2>
+          <p>Safety reports, timestamps and resolution status</p>
+        </div>
+        <button type="button" class="button secondary refresh-button" id="refreshButton">
+          ↻ Refresh
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Incident ID</th>
+              <th>Worker</th>
+              <th>Location</th>
+              <th>Incident</th>
+              <th>Reported At</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="incidentRows">
+            <tr>
+              <td colspan="7">Connect the backend to load incident records.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-brand">⬡ SITEGUARD AI</div>
+      <p>Construction Safety Intelligence · Prototype Edition</p>
+      <p>Protecting workers through smarter safety monitoring.</p>
+    </footer>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
